@@ -1,0 +1,7 @@
+{
+  "common_leaves": "dtpvz:nut",
+  "common_species": "dtpvz:nut",
+  "primitive_log": "pvz:nut_log",
+  "primitive_stripped_log": "pvz:nut_log",
+  "max_branch_radius": 8
+}

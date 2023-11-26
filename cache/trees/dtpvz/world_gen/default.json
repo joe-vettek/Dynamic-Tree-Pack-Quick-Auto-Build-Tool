@@ -1,0 +1,14 @@
+[
+  {
+    "select": {  "types" : ["plains", "forest"] },
+    "apply": {
+      "species" : {
+        "method" : "splice_before",
+        "random" : {
+          "dtquark:sweet_blossom" : 1,
+          "..." : 100
+        }
+      }
+    }
+  }
+]
