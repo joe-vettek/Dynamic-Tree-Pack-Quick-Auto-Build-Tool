@@ -6,6 +6,9 @@ import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
 
+modid = 'dtsakuracompact'
+
+
 def addToTag(templatePath, outputPath, id):
     if not os.path.exists(outputPath):
         fg.mycopyfile(templatePath, outputPath)
@@ -18,7 +21,7 @@ def addToTag(templatePath, outputPath, id):
         jt.saveDictAsJson(outputPath, tempJson)
 
 
-modid = 'dtsakuracompact'
+
 info = jt.readJsonFile('treeInfo.json')
 # print(jt.readJsonFile('cache/assets/dtpvz/models/block/saplings/nut.json'))
 templateName = 'nut'
