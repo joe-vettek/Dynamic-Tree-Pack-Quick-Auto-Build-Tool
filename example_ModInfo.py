@@ -21,7 +21,7 @@ for t in treeList:
         "origin_stripped_log_texture": "sakura:block/stripped_{}_log",
         "origin_stripped_log_top_texture": "sakura:block/stripped_{}_log_top",
         "origin_sapling": "sakura:{}_sapling{}",
-        "leaves_color": colorMap.get(t) if colorMap.get(t) is not None else None,
+        "leaves_color": None,
         "family": ("maple" if "maple" in t else t),
         "is_common": True if not "maple" in t else (True if "green" in t else False)
     }

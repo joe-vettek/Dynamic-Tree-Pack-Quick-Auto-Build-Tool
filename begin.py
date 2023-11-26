@@ -58,7 +58,7 @@ for tree in info:
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getCacheDirPath(), join('trees', templateModName)), 'leaves_properties'),
              templateName + ".json"))
-    treeFamilies["type"] = "{}:{}".format(modid, tree)
+    # treeFamilies["type"] = "{}:{}".format(modid, tree)
     treeFamilies["primitive_leaves"] = info[tree]["origin_leave"]
     if info[tree].get("leaves_color") is not None:
         treeFamilies["color"] = info[tree]["leaves_color"]
@@ -70,7 +70,7 @@ for tree in info:
     createDir(treespeciesPath)
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getCacheDirPath(), join('trees', templateModName)), 'species'), templateName + ".json"))
-    treeFamilies["family"] = "{}:{}".format(modid, tree) if info[tree]["family"] is None else modid+info[tree]["family"]
+    treeFamilies["family"] = "{}:{}".format(modid, tree) if info[tree]["family"] is None else modid+":"+info[tree]["family"]
     treeFamilies["leaves_properties"] = "{}:{}".format(modid, tree)
     treeFamilies["primitive_sapling"] = info[tree]["origin_sapling"]
     jt.saveDictAsJson(join(treespeciesPath, tree + ".json"), treeFamilies)
@@ -87,7 +87,7 @@ for tree in info:
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getCacheDirPath(), join('assets', templateModName)), 'blockstates'),
              templateName + "_branch.json"))
-    treeFamilies["variants"][""]["model"] = "{}:block/{}_branch".format(modid, tree)
+    treeFamilies["variants"][""]["model"] = "{}:block/{}_branch".format(modid, tree if not has_family else info[tree]["family"])
     jt.saveDictAsJson(join(blockstatesPath,tree if not has_family else info[tree]["family"]   + "_branch.json"), treeFamilies)
 
     treeFamilies = jt.readJsonFile(
@@ -105,7 +105,7 @@ for tree in info:
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getCacheDirPath(), join('assets', templateModName)), 'blockstates'),
              "stripped_{}_branch.json".format(templateName)))
-    treeFamilies["variants"][""]["model"] = "{}:block/stripped_{}_branch".format(modid, tree)
+    treeFamilies["variants"][""]["model"] = "{}:block/stripped_{}_branch".format(modid, tree if not has_family else info[tree]["family"])
     jt.saveDictAsJson(join(blockstatesPath, "stripped_{}_branch.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
 
     langPath = join(assetDir, 'lang')
