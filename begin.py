@@ -6,7 +6,7 @@ import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
 
-modid = 'dtoretree'
+modid = 'dtrankine'
 
 
 def addToTag(templatePath, outputPath, id):
@@ -76,6 +76,7 @@ for tree in info:
     treeFamilies["family"] = "{}:{}".format(modid, tree) if info[tree]["family"] is None else modid+":"+info[tree]["family"]
     treeFamilies["leaves_properties"] = "{}:{}".format(modid, tree)
     treeFamilies["primitive_sapling"] = info[tree]["origin_sapling"]
+    treeFamilies["always_show_on_waila"] =not is_common
     jt.saveDictAsJson(join(treespeciesPath, tree + ".json"), treeFamilies)
 
     treeWorldGenPath = join(treepackDir, 'world_gen')
