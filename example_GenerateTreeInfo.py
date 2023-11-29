@@ -4,29 +4,31 @@ import utilSimple.FileGetter as fg
 info = {
 }
 
-treeList =['coal', 'gold', 'redstone', 'lapis', 'copper', 'emerald', 'diamond', 'quartz', 'iron']
+treeList =['eastern_hemlock', 'black_walnut', 'cork_oak', 'juniper', 'sharinga', 'western_hemlock', 'coconut_palm', 'magnolia', 'honey_locust', 'red_birch', 'maple', 'weeping_willow', 'erythrina', 'pinyon_pine', 'yellow_birch', 'cedar', 'balsam_fir', 'black_birch', 'cinnamon']
+
 
 for t in treeList:
     info[t] = {
-        "origin_leave": "minecraft:oak_leaves",
-        "origin_leave_model": "block/oak_leaves",
-        "origin_leave_texture": "block/oak_leaves",
-        "origin_log": "ore_tree:{}_tree_log",
-        "origin_log_texture": "ore_tree:blocks/{}_log",
-        "origin_log_top_texture": "ore_tree:blocks/{}_log_top",
-        "origin_stripped_log":"ore_tree:{}_tree_log",
-        "origin_stripped_log_texture": "ore_tree:blocks/{}_log",
-        "origin_stripped_log_top_texture":"ore_tree:blocks/{}_log_top",
-        "origin_sapling": "ore_tree:{}_tree_sapling",
+        "origin_leave": "rankine:{}_leaves",
+        "origin_leave_model": "rankine:block/{}_leavesage0",
+        "origin_leave_texture": "rankine:block/{}_leaves",
+        "origin_log": "rankine:{}_log",
+        "origin_log_texture": "rankine:block/{}_log",
+        "origin_log_top_texture": "rankine:block/{}_log_top",
+        "origin_stripped_log":"rankine:stripped_{}_log",
+        "origin_stripped_log_texture": "rankine:block/stripped_{}_log",
+        "origin_stripped_log_top_texture":"rankine:block/stripped_{}_log_top",
+        "origin_sapling": "rankine:{}_sapling",
         "leaves_color": None,
         "family": t,
         "is_common": True,
-        "with_stripped":False
+        "with_stripped":True,
+        "has_root":False if t not in "coconut_palm" else True
     }
     for key in info[t]:
         if type(info[t][key])is not str:
             continue
-        info[t][key] = info[t][key].format(t)
+        info[t][key] = info[t][key].format( t)
 
 
 

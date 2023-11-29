@@ -36,9 +36,9 @@ for soil in info:
 
     treeFamiliesPath = join(treepackDir, 'soil_properties')
     createDir(treeFamiliesPath)
-    substitute_soil=info[soil]["substitute_soil"]
+    substitute_soil=info[soil].get("substitute_soil")
     soilJson = jt.readJsonFile(
-        join(join(join(fg.getCacheDirPath(), join('trees', templateModName)), 'soil_properties'), templateName + ".json"))
+        join(join(join(fg.getTemplateDirPath(), join('trees', templateModName)), 'soil_properties'), templateName + ".json"))
     soilJson["primitive_soil"] = info[soil]["origin_soil"]
     soilJson["acceptable_soils"] = info[soil]["soil_category"]
     if substitute_soil is not None:
@@ -53,7 +53,7 @@ for soil in info:
         blockstatesPath = join(assetDir, 'blockstates')
         createDir(blockstatesPath)
         soilJson = jt.readJsonFile(
-            join(join(join(fg.getCacheDirPath(), join('assets', templateModName)), 'blockstates'),
+            join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'blockstates'),
                  "rooty_{}.json".format(templateName)))
         soilJson["multipart"][0]["apply"]["model"] = info[soil]["origin_soil_model"]
         jt.saveDictAsJson(join(blockstatesPath,"rooty_{}.json".format(soil)), soilJson)

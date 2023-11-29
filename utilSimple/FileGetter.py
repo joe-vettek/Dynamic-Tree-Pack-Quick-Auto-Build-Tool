@@ -77,8 +77,8 @@ def getRoot():
 def join(parent,child):
     return os.path.join(parent,child)
 
-def getCacheDirPath():
-    return os.path.join(getRoot(),"cache")
+def getTemplateDirPath():
+    return os.path.join(getRoot(),"template")
 
 def getOutputDirPath():
     return os.path.join(getRoot(),"output")
@@ -88,8 +88,8 @@ def getDriveLetter():
     return os.getcwd()[:1] + ":"
 
 def initDir():
-    if not os.path.exists(getCacheDirPath()):
-        os.makedirs(getCacheDirPath())
+    if not os.path.exists(getTemplateDirPath()):
+        os.makedirs(getTemplateDirPath())
 
 def createDir(dir):
     if not os.path.exists(dir):
