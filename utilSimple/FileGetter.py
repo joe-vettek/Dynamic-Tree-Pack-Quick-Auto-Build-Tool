@@ -1,5 +1,5 @@
 # utlSimple/File.Getter.py
-
+import inspect
 import os
 
 __all__ = ['getAllTextInFile', 'readDir']
@@ -94,3 +94,12 @@ def initDir():
 def createDir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
+
+def find_variable_name(value):
+    frame=inspect.currentframe()
+    try:
+        for varname, varvalue in frame.f_back.f_locals.items():
+            if varvalue is value:
+                return varname
+    finally:
+        del frame
