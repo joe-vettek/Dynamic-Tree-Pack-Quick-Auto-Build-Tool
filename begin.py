@@ -6,7 +6,7 @@ import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
 
-modid = 'dtrankine'
+modid = 'dtabundance'
 
 
 def addToTag(templatePath, outputPath, id):
