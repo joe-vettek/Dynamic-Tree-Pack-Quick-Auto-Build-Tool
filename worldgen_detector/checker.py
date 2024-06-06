@@ -66,6 +66,7 @@ for i in os.listdir(p1):
                 if f"natures_spirit:{f}_placed" in features or f"natures_spirit:{branch_t}_placed" in features:
                     any = True
                     ss["apply"]["species"]["random"][f"dtnatures_spirit:{f}"] = 1
+
         if any:
             out.append(ss)
 

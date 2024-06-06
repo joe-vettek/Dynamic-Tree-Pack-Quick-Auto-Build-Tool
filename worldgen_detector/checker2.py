@@ -16,8 +16,13 @@ treeList = ['aspen', 'cedar', 'cypress', 'fir',
             {'larch': "larch"}, {'yellow_larch': "larch"},
             'ghaf', 'joshua', 'mahogany', 'olive',
             'palo_verde', 'redwood',
-            'saxaul', 'sugi', 'willow',
+            'saxaul', 'sugi', 'willow', 'coconut'
             ]
+
+txt_info = []
+
+t_mod_id = 'dtnatures_spirit'
+treeList2 = ["acacia", "birch", "cherry", "dark_oak", "jungle", "mangrove", "oak", "spruce"]
 
 
 def get_tree_by_leave(fes, leave):
@@ -30,11 +35,16 @@ def get_tree_by_leave(fes, leave):
         else:
             f = t
         if leave == f"natures_spirit:{f}_leaves":
-            return f
+            return f"{t_mod_id}:{f}"
     if leave == "natures_spirit:wisteria_leaves":
-        return ['blue_wisteria', 'purple_wisteria', 'pink_wisteria', 'white_wisteria']
+        return [f"{t_mod_id}:{z}" for z in ['blue_wisteria', 'purple_wisteria', 'pink_wisteria', 'white_wisteria']]
+
+    for t in treeList2:
+        if leave == f"minecraft:{t}_leaves":
+            return f"dynamictrees:{t}"
+
     global txt_info
-    txt_info += f"Not found leave in {biome_id},{fes},{leave}\n"
+    txt_info.append(f"Not found leave in {fes},{leave}\n")
     return None
 
 
@@ -73,9 +83,6 @@ def find_tree_in_place(id):
         return find_tree_in_config(configure_feature["feature"])
     else:
         return []
-
-
-txt_info = ""
 
 
 # to_get_config
@@ -127,12 +134,13 @@ def find_tree_in_config(id):
             else:
                 # print(fes,jt.dictToJsonNoOpen(js_fes))
                 global txt_info
-                txt_info += f"{biome_id},{fes},{jt.dictToJsonNoOpen(js_fes)}\n"
+                txt_info += f"{fes},{jt.dictToJsonNoOpen(js_fes)}\n"
 
     return result
 
 
 out = []
+count = 0
 for i in os.listdir(p1):
     biome = jt.readJsonFile(f"{p1}/{i}")
     biome_id = "natures_spirit:" + i.split(".")[0]
@@ -158,10 +166,14 @@ for i in os.listdir(p1):
             if len(res) > 0:
                 any = True
                 for r in res:
-                    ss["apply"]["species"]["random"][f"dtnatures_spirit:{r}"] = 1
+                    ss["apply"]["species"]["random"][r] = 1
     if any:
         out.append(ss)
+    if len(txt_info) > count:
+        txt_info.insert(count, f"# {biome_id}\n")
+        txt_info.append("\n")
+    count = len(txt_info)
 with open("cache/warnings.log", "w") as f:
-    f.write(txt_info)
+    f.write(''.join(txt_info))
 
 print(jt.dictToJsonNoOpen(out))
