@@ -5,7 +5,6 @@ import utilSimple.JsonTool as jt
 import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
-
 modid = 'dtnatures_spirit'
 
 
@@ -19,7 +18,6 @@ def addToTag(templatePath, outputPath, id):
     if not id in tempJson["values"]:
         tempJson["values"].append(id)
         jt.saveDictAsJson(outputPath, tempJson)
-
 
 
 info = jt.readJsonFile('treeInfo.json')
@@ -39,19 +37,21 @@ for tree in info:
 
     treeFamiliesPath = join(treepackDir, 'families')
     createDir(treeFamiliesPath)
-    is_common=info[tree].get("is_common") is None or info[tree]["is_common"]
-    has_family=info[tree].get("family") is not None
+    is_common = info[tree].get("is_common") is None or info[tree]["is_common"]
+    has_family = info[tree].get("family") is not None
     if is_common:
         treeFamilies = jt.readJsonFile(
-            join(join(join(fg.getTemplateDirPath(), join('trees', templateModName)), 'families'), templateName + ".json"))
-        treeFamilies["common_leaves"] = "{}:{}".format(modid, tree )
+            join(join(join(fg.getTemplateDirPath(), join('trees', templateModName)), 'families'),
+                 templateName + ".json"))
+        treeFamilies["common_leaves"] = "{}:{}".format(modid, tree)
         treeFamilies["common_species"] = "{}:{}".format(modid, tree)
         treeFamilies["primitive_log"] = info[tree]["origin_log"]
         if info[tree]["with_stripped"]:
             treeFamilies["primitive_stripped_log"] = info[tree]["origin_stripped_log"]
         else:
             treeFamilies["generate_stripped_branch"] = False
-        jt.saveDictAsJson(join(treeFamiliesPath, tree if not has_family else info[tree]["family"] + ".json"), treeFamilies)
+        jt.saveDictAsJson(join(treeFamiliesPath, tree if not has_family else info[tree]["family"] + ".json"),
+                          treeFamilies)
 
     jo_codePath = join(treepackDir, 'jo_codes')
     createDir(jo_codePath)
@@ -76,10 +76,11 @@ for tree in info:
     createDir(treespeciesPath)
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getTemplateDirPath(), join('trees', templateModName)), 'species'), templateName + ".json"))
-    treeFamilies["family"] = "{}:{}".format(modid, tree) if info[tree]["family"] is None else modid+":"+info[tree]["family"]
+    treeFamilies["family"] = "{}:{}".format(modid, tree) if info[tree]["family"] is None else modid + ":" + info[tree][
+        "family"]
     treeFamilies["leaves_properties"] = "{}:{}".format(modid, tree)
     treeFamilies["primitive_sapling"] = info[tree]["origin_sapling"]
-    treeFamilies["always_show_on_waila"] =not is_common
+    treeFamilies["always_show_on_waila"] = not is_common
     jt.saveDictAsJson(join(treespeciesPath, tree + ".json"), treeFamilies)
 
     treeWorldGenPath = join(treepackDir, 'world_gen')
@@ -94,8 +95,10 @@ for tree in info:
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'blockstates'),
              templateName + "_branch.json"))
-    treeFamilies["variants"][""]["model"] = "{}:block/{}_branch".format(modid, tree if not has_family else info[tree]["family"])
-    jt.saveDictAsJson(join(blockstatesPath,tree if not has_family else info[tree]["family"]   + "_branch.json"), treeFamilies)
+    treeFamilies["variants"][""]["model"] = "{}:block/{}_branch".format(modid, tree if not has_family else info[tree][
+        "family"])
+    jt.saveDictAsJson(join(blockstatesPath, tree if not has_family else info[tree]["family"] + "_branch.json"),
+                      treeFamilies)
 
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'blockstates'),
@@ -107,7 +110,7 @@ for tree in info:
         treeFamilies = jt.readJsonFile(
             join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'blockstates'),
                  templateName + "_root.json"))
-        treeFamilies["variants"][""]["model"] =  "{}:block/{}_root".format(modid, tree)
+        treeFamilies["variants"][""]["model"] = "{}:block/{}_root".format(modid, tree)
         jt.saveDictAsJson(join(blockstatesPath, tree + "_root.json"), treeFamilies)
 
     treeFamilies = jt.readJsonFile(
@@ -120,8 +123,11 @@ for tree in info:
         treeFamilies = jt.readJsonFile(
             join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'blockstates'),
                  "stripped_{}_branch.json".format(templateName)))
-        treeFamilies["variants"][""]["model"] = "{}:block/stripped_{}_branch".format(modid, tree if not has_family else info[tree]["family"])
-        jt.saveDictAsJson(join(blockstatesPath, "stripped_{}_branch.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+        treeFamilies["variants"][""]["model"] = "{}:block/stripped_{}_branch".format(modid, tree if not has_family else
+        info[tree]["family"])
+        jt.saveDictAsJson(
+            join(blockstatesPath, "stripped_{}_branch.json".format(tree if not has_family else info[tree]["family"])),
+            treeFamilies)
 
     langPath = join(assetDir, 'lang')
     createDir(langPath)
@@ -147,14 +153,16 @@ for tree in info:
              "{}_branch.json".format(templateName)))
     treeFamilies["textures"]["bark"] = info[tree]["origin_log_texture"]
     treeFamilies["textures"]["rings"] = info[tree]["origin_log_top_texture"]
-    jt.saveDictAsJson(join(blockModelPath, "{}_branch.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+    jt.saveDictAsJson(join(blockModelPath, "{}_branch.json".format(tree if not has_family else info[tree]["family"])),
+                      treeFamilies)
 
     if info[tree]["has_root"]:
         treeFamilies = jt.readJsonFile(
             join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'models/block'),
                  "{}_root.json".format(templateName)))
         treeFamilies["textures"]["bark"] = info[tree]["origin_log_texture"]
-        jt.saveDictAsJson(join(blockModelPath, "{}_root.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+        jt.saveDictAsJson(join(blockModelPath, "{}_root.json".format(tree if not has_family else info[tree]["family"])),
+                          treeFamilies)
 
     if info[tree]["with_stripped"]:
         treeFamilies = jt.readJsonFile(
@@ -162,14 +170,17 @@ for tree in info:
                  "stripped_{}_branch.json".format(templateName)))
         treeFamilies["textures"]["bark"] = info[tree]["origin_stripped_log_texture"]
         treeFamilies["textures"]["rings"] = info[tree]["origin_stripped_log_top_texture"]
-        jt.saveDictAsJson(join(blockModelPath, "stripped_{}_branch.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+        jt.saveDictAsJson(
+            join(blockModelPath, "stripped_{}_branch.json".format(tree if not has_family else info[tree]["family"])),
+            treeFamilies)
 
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'models/item'),
              "{}_branch.json".format(templateName)))
     treeFamilies["textures"]["bark"] = info[tree]["origin_log_texture"]
     treeFamilies["textures"]["rings"] = info[tree]["origin_log_top_texture"]
-    jt.saveDictAsJson(join(itemModelPath, "{}_branch.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+    jt.saveDictAsJson(join(itemModelPath, "{}_branch.json".format(tree if not has_family else info[tree]["family"])),
+                      treeFamilies)
 
     treeFamilies = jt.readJsonFile(
         join(join(join(fg.getTemplateDirPath(), join('assets', templateModName)), 'models/item'),
@@ -193,6 +204,9 @@ for tree in info:
         join(join(join(fg.getTemplateDirPath(), join('data', templateModName)), 'loot_tables/blocks'),
              "{}_leaves.json".format(templateName)))
     treeFamilies = treeFamilies.replace("pvz:{}_leaves".format(templateName), info[tree]["origin_leave"])
+    treeFamilies = jt.strToJson(treeFamilies)
+    treeFamilies["random_sequence"] = f"{modid}:blocks/{tree}_leaves"
+    treeFamilies = jt.dictToJson(treeFamilies)
     fg.saveText(join(lootBlockPath, "{}_leaves.json".format(tree)), treeFamilies)
 
     lootTreeBranchesPath = join(dataDir, 'loot_tables/trees/branches')
@@ -201,20 +215,32 @@ for tree in info:
         join(join(join(fg.getTemplateDirPath(), join('data', templateModName)), 'loot_tables/trees/branches'),
              "{}.json".format(templateName)))
     treeFamilies = treeFamilies.replace("minecraft:oak_log", info[tree]["origin_log"])
-    fg.saveText(join(lootTreeBranchesPath, "{}.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+    treeFamilies = jt.strToJson(treeFamilies)
+    treeFamilies["random_sequence"] = f"{modid}:trees/branches/{tree}"
+    treeFamilies = jt.dictToJson(treeFamilies)
+    fg.saveText(join(lootTreeBranchesPath, "{}.json".format(tree if not has_family else info[tree]["family"])),
+                treeFamilies)
 
     if info[tree]["with_stripped"]:
         treeFamilies = fg.getAllTextInFile(
             join(join(join(fg.getTemplateDirPath(), join('data', templateModName)), 'loot_tables/trees/branches'),
                  "stripped_{}.json".format(templateName)))
         treeFamilies = treeFamilies.replace("minecraft:stripped_oak_log", info[tree]["origin_stripped_log"])
-        fg.saveText(join(lootTreeBranchesPath, "stripped_{}.json".format(tree if not has_family else info[tree]["family"])), treeFamilies)
+        treeFamilies = jt.strToJson(treeFamilies)
+        treeFamilies["random_sequence"] = f"{modid}:trees/branches/stripped_{tree}"
+        treeFamilies = jt.dictToJson(treeFamilies)
+        fg.saveText(
+            join(lootTreeBranchesPath, "stripped_{}.json".format(tree if not has_family else info[tree]["family"])),
+            treeFamilies)
 
     lootTreeLeavesPath = join(dataDir, 'loot_tables/trees/leaves')
     createDir(lootTreeLeavesPath)
     treeFamilies = fg.getAllTextInFile(
         join(join(join(fg.getTemplateDirPath(), join('data', templateModName)), 'loot_tables/trees/leaves'),
              "{}.json".format(templateName)))
+    treeFamilies = jt.strToJson(treeFamilies)
+    treeFamilies["random_sequence"] = f"{modid}:trees/leaves/{tree}"
+    treeFamilies = jt.dictToJson(treeFamilies)
     fg.saveText(join(lootTreeLeavesPath, "{}.json".format(tree)), treeFamilies)
 
     lootTreeVoluntaryPath = join(dataDir, 'loot_tables/trees/voluntary')
@@ -222,6 +248,9 @@ for tree in info:
     treeFamilies = fg.getAllTextInFile(
         join(join(join(fg.getTemplateDirPath(), join('data', templateModName)), 'loot_tables/trees/voluntary'),
              "{}.json".format(templateName)))
+    treeFamilies = jt.strToJson(treeFamilies)
+    treeFamilies["random_sequence"] = f"{modid}:trees/voluntary/{tree}"
+    treeFamilies = jt.dictToJson(treeFamilies)
     treeFamilies = treeFamilies.replace("{}:{}_seed".format(templateModName, templateName),
                                         "{}:{}_seed".format(modid, tree))
     fg.saveText(join(lootTreeVoluntaryPath, "{}.json".format(tree)), treeFamilies)
@@ -236,7 +265,8 @@ for tree in info:
     createDir(tagItemPath)
 
     addToTag(join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/blocks/branches_that_burn.json')
-             , join(tagBlockPath, "branches_that_burn.json"), "{}:{}_branch".format(modid, tree if not has_family else info[tree]["family"]))
+             , join(tagBlockPath, "branches_that_burn.json"),
+             "{}:{}_branch".format(modid, tree if not has_family else info[tree]["family"]))
 
     addToTag(join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/blocks/leaves.json')
              , join(tagBlockPath, "leaves.json"), "{}:{}_leaves".format(modid, tree))
@@ -246,8 +276,10 @@ for tree in info:
 
     if info[tree]["with_stripped"]:
         addToTag(
-            join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/blocks/stripped_branches_that_burn.json')
-            , join(tagBlockPath, "stripped_branches_that_burn.json"), "{}:stripped_{}_branch".format(modid, tree if not has_family else info[tree]["family"]))
+            join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")),
+                 'tags/blocks/stripped_branches_that_burn.json')
+            , join(tagBlockPath, "stripped_branches_that_burn.json"),
+            "{}:stripped_{}_branch".format(modid, tree if not has_family else info[tree]["family"]))
 
     addToTag(join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/items/seeds.json')
              , join(tagItemPath, "seeds.json"), "{}:{}_seed".format(modid, tree))

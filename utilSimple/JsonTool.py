@@ -21,4 +21,4 @@ def dictToJsonNoOpen(dict0):
     return json.dumps(dict0, ensure_ascii=False, sort_keys=False)
 
 def strToJson(jsonString):
-    return json.dumps(json.loads(jsonString, object_pairs_hook=collections.OrderedDict), ensure_ascii=False, sort_keys=False)
+    return json.loads(jsonString, object_pairs_hook=collections.OrderedDict)
