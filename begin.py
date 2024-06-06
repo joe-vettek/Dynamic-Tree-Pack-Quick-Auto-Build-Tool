@@ -6,7 +6,7 @@ import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
 
-modid = 'dtabundance'
+modid = 'dtnatures_spirit'
 
 
 def addToTag(templatePath, outputPath, id):
@@ -27,7 +27,10 @@ info = jt.readJsonFile('treeInfo.json')
 templateName = 'nut'
 templateModName = 'dtpvz'
 
-shutil.rmtree('output')
+try:
+    shutil.rmtree('output')
+except:
+    pass
 createDir('output')
 for tree in info:
     # build family
