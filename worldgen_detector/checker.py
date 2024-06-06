@@ -7,12 +7,15 @@ from utilSimple import FileGetter as fg
 p1 = 'cache/worldgen/biome'
 p2 = 'cache/worldgen/placed_feature'
 p3 = 'cache/worldgen/configured_feature'
-treeList = ['aspen', 'blue_wisteria', 'cedar', 'cypress', 'fir',
-            'ghaf', 'joshua', 'larch', 'mahogany', 'olive',
-            'orange_maple', 'palo_verde', 'pink_wisteria',
-            'purple_wisteria', 'red_maple', 'redwood',
-            'saxaul', 'sugi', 'white_wisteria', 'willow',
-            'yellow_larch', 'yellow_maple']
+treeList = ['aspen', 'cedar', 'cypress', 'fir',
+            {'blue_wisteria': "wisteria"}, {'purple_wisteria': "wisteria"},
+            {'pink_wisteria': "wisteria"}, {'white_wisteria': "wisteria"},
+            {'orange_maple': "maple"}, {'red_maple': "maple"}, {'yellow_maple': "maple"},
+            {'larch': "larch"}, {'yellow_larch': "larch"},
+            'ghaf', 'joshua', 'mahogany', 'olive',
+            'palo_verde', 'redwood',
+            'saxaul', 'sugi', 'willow',
+            ]
 
 
 def get_json(js_path):
@@ -47,21 +50,26 @@ for i in os.listdir(p1):
                 "forestness": 1.0
             }
         }
-        any=False
+        any = False
         if biome.get("features") is not None:
             features = []
             for j in biome["features"]:
                 features.extend(j)
-
             for t in treeList:
-                f = t.split("_")[-1]
-                if f"natures_spirit:{f}_placed" in features:
-                    any=True
-                    ss["apply"]["species"]["random"][f"dtnatures_spirit:{t}"]=1
+                branch_t=''
+                if type(t) != str:
+                    keyname = list(t.keys())[0]
+                    f = keyname
+                    branch_t = t[f]
+                else:
+                    f = t
+                if f"natures_spirit:{f}_placed" in features or f"natures_spirit:{branch_t}_placed" in features:
+                    any = True
+                    ss["apply"]["species"]["random"][f"dtnatures_spirit:{f}"] = 1
         if any:
             out.append(ss)
 
     except Exception as e:
 
         pass
-print(json.dumps(out))
+print(jt.dictToJson(out))

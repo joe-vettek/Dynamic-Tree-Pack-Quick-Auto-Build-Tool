@@ -283,3 +283,7 @@ for tree in info:
 
     addToTag(join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/items/seeds.json')
              , join(tagItemPath, "seeds.json"), "{}:{}_seed".format(modid, tree))
+
+    if has_family:
+        addToTag(join(join(fg.getTemplateDirPath(), join('data', "dynamictrees")), 'tags/items/branches_that_burn.json')
+                 , join(tagItemPath, "branches_that_burn.json"), f"{modid}:{info[tree]['family']}_branch")

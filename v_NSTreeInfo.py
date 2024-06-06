@@ -5,18 +5,26 @@ info = {
 }
 
 modid = 'natures_spirit'
-treeList = ['aspen', 'blue_wisteria', 'cedar', 'cypress', 'fir',
-            'ghaf', 'joshua', 'larch', 'mahogany', 'olive',
-            'orange_maple', 'palo_verde', 'pink_wisteria',
-            'purple_wisteria', 'red_maple', 'redwood',
-            'saxaul', 'sugi', 'white_wisteria', 'willow',
-            'yellow_larch', 'yellow_maple']
+treeList = ['aspen', 'cedar', 'cypress', 'fir',
+            {'blue_wisteria': "wisteria"}, {'purple_wisteria': "wisteria"},
+            {'pink_wisteria': "wisteria"}, {'white_wisteria': "wisteria"},
+            {'orange_maple': "maple"}, {'red_maple': "maple"}, {'yellow_maple': "maple"},
+            {'larch': "larch"}, {'yellow_larch': "larch"},
+            'ghaf', 'joshua', 'mahogany', 'olive',
+            'palo_verde', 'redwood',
+            'saxaul', 'sugi', 'willow', 'coconut'
+            ]
 
 is_common_map = []
 # treeList.extend(['flowering_jacaranda','flowering_redbud','budding_jacaranda','budding_redbud'])
 
 for t in treeList:
-    branch_t = t.split("_")[-1]
+    if type(t) == str:
+        branch_t = t
+    else:
+        keyname = list(t.keys())[0]
+        branch_t = t[keyname]
+        t = keyname
 
     info[t] = {
         "origin_leave": f"{modid}:{t}_leaves",
@@ -38,5 +46,8 @@ for t in treeList:
     is_common_map.append(branch_t)
 
 print(jt.dictToJson(info))
+
+info['coconut']["origin_sapling"] = "natures_spirit:coconut_sprout"
+
 
 jt.saveDictAsJson('treeInfo.json', info)
