@@ -80,7 +80,7 @@ def get_place(id):
 def find_tree_in_place(id):
     configure_feature = get_place(id)
     if has_key(configure_feature, "feature"):
-        return find_tree_in_config(configure_feature["feature"])
+        return find_tree_in_config(configure_feature["feature"], id)
     else:
         return []
 
@@ -97,16 +97,16 @@ def check_place_or_config(input_obj):
     return None
 
 
-def deal_with_output_error(feature):
+def deal_with_output_error(id, feature):
     global txt_info
     if type(feature) == str:
-        txt_info += f"Not found {feature}\n"
+        txt_info += f"Not in {id} found {feature} \n"
     else:
-        if has_key(feature, "feature") and type(feature["feature"])==str:
-            txt_info += f"Not found {jt.dictToJsonNoOpen(feature)}\n"
+        if has_key(feature, "feature") and type(feature["feature"]) == str:
+            txt_info += f"Not in {id} found {jt.dictToJsonNoOpen(feature)}\n"
 
 
-def find_tree_in_config(id):
+def find_tree_in_config(id, id2):
     configure_feature = get_config(id)
     result = []
     global txt_info
@@ -119,19 +119,21 @@ def find_tree_in_config(id):
             get_item = check_place_or_config(configure_feature["config"]["default"])
         if get_item:
             fes112.append(get_item[0])
+        elif has_key(configure_feature["config"], "default"):
+            deal_with_output_error(id, configure_feature["config"]["default"])
         for i in configure_feature["config"]["features"]:
             if configure_feature["type"] == "minecraft:random_selector":
                 get_item = check_place_or_config(i["feature"])
                 if get_item:
                     fes112.append(get_item[0])
                 else:
-                    deal_with_output_error(i)
+                    deal_with_output_error(id, i)
             else:
                 get_item = check_place_or_config(i)
                 if get_item:
                     fes112.append(get_item[0])
                 else:
-                    deal_with_output_error(i)
+                    deal_with_output_error(id, i)
         # now we get a config feature list
         fes112 = list(set(fes112))
 
@@ -149,6 +151,7 @@ def find_tree_in_config(id):
                 # print(fes,jt.dictToJsonNoOpen(js_fes))
                 txt_info += f"{fes},{jt.dictToJsonNoOpen(js_fes)}\n"
 
+        # txt_info += f"{id2} {jt.dictToJsonNoOpen(configure_feature['config'])}\n"
     return result
 
 
