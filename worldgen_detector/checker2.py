@@ -97,9 +97,19 @@ def check_place_or_config(input_obj):
     return None
 
 
+def deal_with_output_error(feature):
+    global txt_info
+    if type(feature) == str:
+        txt_info += f"Not found {feature}\n"
+    else:
+        if has_key(feature, "feature") and type(feature["feature"])==str:
+            txt_info += f"Not found {jt.dictToJsonNoOpen(feature)}\n"
+
+
 def find_tree_in_config(id):
     configure_feature = get_config(id)
     result = []
+    global txt_info
     if has_key(configure_feature, "type") and \
             (configure_feature["type"] == "minecraft:random_selector"
              or configure_feature["type"] == "minecraft:simple_random_selector"):
@@ -114,10 +124,14 @@ def find_tree_in_config(id):
                 get_item = check_place_or_config(i["feature"])
                 if get_item:
                     fes112.append(get_item[0])
+                else:
+                    deal_with_output_error(i)
             else:
                 get_item = check_place_or_config(i)
                 if get_item:
                     fes112.append(get_item[0])
+                else:
+                    deal_with_output_error(i)
         # now we get a config feature list
         fes112 = list(set(fes112))
 
@@ -133,7 +147,6 @@ def find_tree_in_config(id):
                         result.extend(tree)
             else:
                 # print(fes,jt.dictToJsonNoOpen(js_fes))
-                global txt_info
                 txt_info += f"{fes},{jt.dictToJsonNoOpen(js_fes)}\n"
 
     return result

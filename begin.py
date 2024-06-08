@@ -5,7 +5,7 @@ import utilSimple.JsonTool as jt
 import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
-modid = 'dtnatures_spirit'
+modid = 'dtbetterend'
 
 
 def addToTag(templatePath, outputPath, id):
