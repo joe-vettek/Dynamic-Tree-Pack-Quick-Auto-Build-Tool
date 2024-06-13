@@ -78,6 +78,7 @@ def get_place(id):
 
 
 def find_tree_in_place(id):
+
     configure_feature = get_place(id)
     if has_key(configure_feature, "feature"):
         return find_tree_in_config(configure_feature["feature"], id)
@@ -109,6 +110,7 @@ def deal_with_output_error(id, feature):
 def find_tree_in_config(id, id2):
     configure_feature = get_config(id)
     result = []
+    # print(id,jt.dictToJsonNoOpen(configure_feature))
     global txt_info
     if has_key(configure_feature, "type") and \
             (configure_feature["type"] == "minecraft:random_selector"

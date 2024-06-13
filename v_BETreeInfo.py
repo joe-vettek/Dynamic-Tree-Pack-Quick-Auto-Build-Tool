@@ -8,7 +8,7 @@ info = {
 
 modid = 'betterend'
 # too much problem
-treeList = ['dragon_tree', 'helix_tree', 'hydralux', 'lacugrove', 'lucernia', 'mossy_glowshroom', 'pythadendron', 'tenanea', 'umbrella_tree']
+treeList = ['dragon_tree',  'lacugrove', 'lucernia', 'pythadendron', 'tenanea']
 
 
 is_common_map = []
@@ -29,15 +29,15 @@ for t in treeList:
         "origin_log": f"{modid}:{branch_t}_log",
         "origin_log_texture": f"{modid}:block/{branch_t}_log_side",
         "origin_log_top_texture": f"{modid}:block/{branch_t}_log_top",
-        "origin_stripped_log": f"{modid}:stripped_{branch_t}_log",
-        "origin_stripped_log_texture": f"{modid}:block/stripped_{branch_t}_log_side_2",
-        "origin_stripped_log_top_texture": f"{modid}:block/stripped_{branch_t}_log_top",
+        "origin_stripped_log": f"{modid}:{branch_t}_stripped_log",
+        "origin_stripped_log_texture": f"{modid}:block/{branch_t}_stripped_log_side",
+        "origin_stripped_log_top_texture": f"{modid}:block/{branch_t}_stripped_log_top",
         "origin_sapling": f"{modid}:{t}_sapling",
         "leaves_color": None,
         "family": branch_t,
         "is_common": branch_t not in is_common_map,
         "with_stripped": True,
-        "has_root": False
+        "has_root": True
     }
     is_common_map.append(branch_t)
 
