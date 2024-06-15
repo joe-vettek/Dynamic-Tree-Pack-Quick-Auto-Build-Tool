@@ -6,7 +6,7 @@ import utilSimple.FileGetter as fg
 from utilSimple.FileGetter import join, createDir
 
 
-modid = 'dtnatures_spirit'
+modid = 'dtbetterend'
 
 
 def addToTag(templatePath, outputPath, id):
@@ -43,8 +43,8 @@ for soil in info:
     soilJson["acceptable_soils"] = info[soil]["soil_category"]
     if substitute_soil is not None:
         soilJson["substitute_soil"] = substitute_soil
-    else:
-        jt.saveDictAsJson(join(treeFamiliesPath, soil +".json"), soilJson)
+
+    jt.saveDictAsJson(join(treeFamiliesPath, soil +".json"), soilJson)
 
     assetDir = join(fg.getOutputDirPath(), join('assets', modid))
     createDir(assetDir)

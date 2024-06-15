@@ -20,6 +20,20 @@ def addToTag(templatePath, outputPath, id):
         jt.saveDictAsJson(outputPath, tempJson)
 
 
+def addToLang(outputPath, key, value):
+    js = {}
+    if os.path.exists(outputPath):
+        js = jt.readJsonFile(outputPath)
+    js[key] = value
+    jt.saveDictAsJson(outputPath, js)
+
+
+def id_name(id):
+    names = id.split('_')
+    treeBranchName = ' '.join([n[0].upper() + n[1:] for n in names])
+    return treeBranchName
+
+
 info = jt.readJsonFile('treeInfo.json')
 # print(jt.readJsonFile('cache/assets/dtpvz/models/block/saplings/nut.json'))
 templateName = 'nut'
@@ -131,6 +145,19 @@ for tree in info:
 
     langPath = join(assetDir, 'lang')
     createDir(langPath)
+    enLangPath = join(langPath, 'en_us.json')
+    if is_common:
+        main: str = tree if not has_family else info[tree]['family']
+        treeBranchName = id_name(main)
+        addToLang(enLangPath, f"block.{modid}.{main}_branch",
+                  f"{treeBranchName} {'' if treeBranchName.endswith('Tree') else 'Tree'}".strip())
+    addToLang(enLangPath, f"block.{modid}.{tree}_sapling",
+              f"{id_name(tree)} Sapling".strip())
+    addToLang(enLangPath, f"item.{modid}.{tree}_seed",
+              f"{id_name(tree)} Seed".strip())
+    addToLang(enLangPath, f"species.{modid}.{tree}",
+              f"{id_name(tree)}".strip())
+
 
     modelsPath = join(assetDir, 'models')
 

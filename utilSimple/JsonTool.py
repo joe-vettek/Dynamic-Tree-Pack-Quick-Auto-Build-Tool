@@ -14,6 +14,7 @@ def saveDictAsJson(file, dict0):
         f.write(dictToJson(dict0))
         f.close()
 
+
 def dictToJson(dict0):
     return json.dumps(dict0, ensure_ascii=False, sort_keys=False, indent=4, separators=(',',':'))
 

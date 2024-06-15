@@ -1,0 +1,50 @@
+{
+  "shadow_grass": {
+    "origin_soil": "betterend:shadow_grass",
+    "origin_soil_model": "betterend:block/shadow_grass",
+    "soil_category": [
+      "shadow_grass"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  },
+  "end_moss": {
+    "origin_soil": "betterend:end_moss",
+    "origin_soil_model": "betterend:block/end_moss",
+    "soil_category": [
+      "moss_or_dust"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  },
+  "endstone_dust": {
+    "origin_soil": "betterend:end_moss",
+    "origin_soil_model": "betterend:block/end_moss",
+    "soil_category": [
+      "moss_or_dust"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  },
+  "rutiscus": {
+    "origin_soil": "betterend:rutiscus",
+    "origin_soil_model": "betterend:block/rutiscus",
+    "soil_category": [
+      "rutiscus"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  },
+  "chorus_nylium": {
+    "origin_soil": "betterend:chorus_nylium",
+    "origin_soil_model": "betterend:block/chorus_nylium",
+    "soil_category": [
+      "chorus_nylium"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  },
+  "pink_moss": {
+    "origin_soil": "betterend:pink_moss",
+    "origin_soil_model": "betterend:block/pink_moss",
+    "soil_category": [
+      "pink_moss"
+    ],
+    "substitute_soil": "minecraft:end_stone"
+  }
+}
