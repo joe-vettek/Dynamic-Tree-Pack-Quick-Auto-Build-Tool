@@ -3,7 +3,7 @@ import json
 
 import utilSimple.FileGetter as fg
 
-def readJsonFile(file):
+def readJsonFile(file)->dict:
     with open(file, "r", encoding="utf-8") as f:
         allJson = json.load(f, object_pairs_hook=collections.OrderedDict)
         f.close()

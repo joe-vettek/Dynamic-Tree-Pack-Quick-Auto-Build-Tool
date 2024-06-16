@@ -35,6 +35,11 @@ def id_name(id):
 
 
 info = jt.readJsonFile('treeInfo.json')
+
+if os.path.exists('modInfo.json'):
+    modInfo = jt.readJsonFile('modInfo.json')
+    modid = modInfo["dtmodid"]
+
 # print(jt.readJsonFile('cache/assets/dtpvz/models/block/saplings/nut.json'))
 templateName = 'nut'
 templateModName = 'dtpvz'
@@ -64,6 +69,9 @@ for tree in info:
             treeFamilies["primitive_stripped_log"] = info[tree]["origin_stripped_log"]
         else:
             treeFamilies["generate_stripped_branch"] = False
+        if info[tree]["has_root"]:
+            treeFamilies["generate_surface_root"] = True
+
         jt.saveDictAsJson(join(treeFamiliesPath, tree if not has_family else info[tree]["family"] + ".json"),
                           treeFamilies)
 
@@ -157,7 +165,6 @@ for tree in info:
               f"{id_name(tree)} Seed".strip())
     addToLang(enLangPath, f"species.{modid}.{tree}",
               f"{id_name(tree)}".strip())
-
 
     modelsPath = join(assetDir, 'models')
 

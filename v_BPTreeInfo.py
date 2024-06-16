@@ -4,16 +4,12 @@ import utilSimple.FileGetter as fg
 info = {
 }
 
-modid = 'natures_spirit'
-treeList = ['aspen', 'cedar', 'cypress', 'fir',
-            {'blue_wisteria': "wisteria"}, {'purple_wisteria': "wisteria"},
-            {'pink_wisteria': "wisteria"}, {'white_wisteria': "wisteria"},
-            {'orange_maple': "maple"}, {'red_maple': "maple"}, {'yellow_maple': "maple"},
-            {'larch': "larch"}, {'yellow_larch': "larch"},
-            'ghaf', 'joshua', 'mahogany', 'olive',
-            'palo_verde', 'redwood',
-            'saxaul', 'sugi', 'willow', 'coconut'
-            ]
+# print([i[len('betterend')+1:-len('_sapling')] for i in betterend.blocks.list() if i.endswith('sapling')])
+
+modid = 'beachparty'
+# too much problem
+treeList = ['palm']
+
 
 is_common_map = []
 # treeList.extend(['flowering_jacaranda','flowering_redbud','budding_jacaranda','budding_redbud'])
@@ -31,31 +27,26 @@ for t in treeList:
         "origin_leave_model": f"{modid}:block/{t}_leaves",
         "origin_leave_texture": f"{modid}:block/{t}_leaves",
         "origin_log": f"{modid}:{branch_t}_log",
-        "origin_log_texture": f"{modid}:block/{branch_t}_log",
+        "origin_log_texture": f"{modid}:block/{branch_t}_log_side",
         "origin_log_top_texture": f"{modid}:block/{branch_t}_log_top",
         "origin_stripped_log": f"{modid}:stripped_{branch_t}_log",
-        "origin_stripped_log_texture": f"{modid}:block/stripped_{branch_t}_log",
-        "origin_stripped_log_top_texture": f"{modid}:block/stripped_{branch_t}_log_top",
+        "origin_stripped_log_texture": f"{modid}:block/stripped_{branch_t}_log_side",
+        "origin_stripped_log_top_texture": f"{modid}:block/stripped_{branch_t}_log",
         "origin_sapling": f"{modid}:{t}_sapling",
         "leaves_color": None,
         "family": branch_t,
         "is_common": branch_t not in is_common_map,
         "with_stripped": True,
-        "has_root": False
+        "has_root": True
     }
     is_common_map.append(branch_t)
 
 print(jt.dictToJson(info))
 
-info['coconut']["origin_sapling"] = "natures_spirit:coconut_sprout"
-
 
 jt.saveDictAsJson('treeInfo.json', info)
 
-def id_name(id):
-    names = id.split('_')
-    treeBranchName = ' '.join([n[0].upper() + n[1:] for n in names])
-    return treeBranchName
-
-for i in info:
-    print("* ",id_name(i))
+jt.saveDictAsJson('modInfo.json', {
+    'modid': modid,
+    'dtmodid': f'dt{modid}'
+})
