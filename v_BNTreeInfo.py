@@ -9,7 +9,7 @@ info = {
 
 modid = 'bloomingnature'
 # too much problem
-treeList = ['aspen', 'baobab', 'chestnut', 'ebony', 'fir', 'larch', 'swamp_cypress', 'swamp_oak']
+treeList = ['aspen', 'baobab', 'chestnut', 'ebony', 'fir', 'larch', 'swamp_cypress', 'swamp_oak','fan_palm']
 
 is_common_map = []
 # treeList.extend(['flowering_jacaranda','flowering_redbud','budding_jacaranda','budding_redbud'])
@@ -30,14 +30,14 @@ for t in treeList:
         "origin_log_texture": f"{modid}:block/{branch_t}_log_side",
         "origin_log_top_texture": f"{modid}:block/{branch_t}_log_top",
         "origin_stripped_log": f"{modid}:stripped_{branch_t}_log",
-        "origin_stripped_log_texture": f"{modid}:block/stripped_{branch_t}_log_side",
-        "origin_stripped_log_top_texture": f"{modid}:block/stripped_{branch_t}_log_top",
+        "origin_stripped_log_texture": f"{modid}:block/{branch_t}_log_side_stripped",
+        "origin_stripped_log_top_texture": f"{modid}:block/{branch_t}_log_top_stripped",
         "origin_sapling": f"{modid}:{t}_sapling",
         "leaves_color": None,
         "family": branch_t,
         "is_common": branch_t not in is_common_map,
         "with_stripped": True,
-        "has_root": True
+        "has_root": False
     }
     is_common_map.append(branch_t)
 

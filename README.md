@@ -18,3 +18,9 @@ If  looking for added features, in 1.20.1, or search in their java source code B
 in forge for 1.18.2 ,check the code use BiomeLoadingEvent
 
 Generally speaking, the features used are listed in the biome json, through place->config->(config/place (config here needs {} plus placement modifier, which is actually equivalent to place)).
+
+or we should see `tags/worldgen/biome/xx.json`
+
+### about worldgen
+
+It's a Multithreaded behavior. You couldn't use method such as `level.getBlockState` or `TreeHelper.startAnalysisFromRoot`. This will cause the thread to deadlock.

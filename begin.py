@@ -69,6 +69,7 @@ for tree in info:
             treeFamilies["primitive_stripped_log"] = info[tree]["origin_stripped_log"]
         else:
             treeFamilies["generate_stripped_branch"] = False
+            treeFamilies["primitive_stripped_log"] = "minecraft:stripped_oak_log"
         if info[tree]["has_root"]:
             treeFamilies["generate_surface_root"] = True
 
