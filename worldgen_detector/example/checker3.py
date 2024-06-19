@@ -192,7 +192,7 @@ for i in os.listdir(p1):
         txt_info.insert(count, f"# {biome_id}\n")
         txt_info.append("\n")
     count = len(txt_info)
-with open("cache/warnings.log", "w") as f:
+with open("../cache/warnings.log", "w") as f:
     f.write(''.join(txt_info))
 
 print(jt.dictToJsonNoOpen(out))

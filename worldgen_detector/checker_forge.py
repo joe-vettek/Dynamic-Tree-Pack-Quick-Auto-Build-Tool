@@ -6,22 +6,17 @@ import traceback
 from utilSimple import JsonTool as jt
 from utilSimple import FileGetter as fg
 
-p1 = 'data/natures_spirit/worldgen/biome'
-p2 = 'data/natures_spirit/worldgen/placed_feature'
-p3 = 'data/natures_spirit/worldgen/configured_feature'
-treeList = ['aspen', 'cedar', 'cypress', 'fir',
-            {'blue_wisteria': "wisteria"}, {'purple_wisteria': "wisteria"},
-            {'pink_wisteria': "wisteria"}, {'white_wisteria': "wisteria"},
-            {'orange_maple': "maple"}, {'red_maple': "maple"}, {'yellow_maple': "maple"},
-            {'larch': "larch"}, {'yellow_larch': "larch"},
-            'ghaf', 'joshua', 'mahogany', 'olive',
-            'palo_verde', 'redwood',
-            'saxaul', 'sugi', 'willow', 'coconut'
-            ]
+modid = 'bloomingnature'
+p_base = f'data/{modid}/forge/biome_modifier'
+p1 = f'data/{modid}/worldgen/biome'
+p2 = f'data/{modid}/worldgen/placed_feature'
+p3 = f'data/{modid}/worldgen/configured_feature'
+treeList = ['aspen', 'baobab', 'chestnut', 'ebony', 'fir', {'larch': "larch"}, 'swamp_cypress', 'swamp_oak', 'fan_palm']
 
 txt_info = []
 
-t_mod_id = 'dtnatures_spirit'
+t_mod_id = 'dtbloomingnature'
+
 treeList2 = ["acacia", "birch", "cherry", "dark_oak", "jungle", "mangrove", "oak", "spruce"]
 
 
@@ -34,7 +29,7 @@ def get_tree_by_leave(fes, leave):
             branch_t = t[f]
         else:
             f = t
-        if leave == f"natures_spirit:{f}_leaves":
+        if leave == f"{modid}:{f}_leaves":
             return f"{t_mod_id}:{f}"
     if leave == "natures_spirit:wisteria_leaves":
         return [f"{t_mod_id}:{z}" for z in ['blue_wisteria', 'purple_wisteria', 'pink_wisteria', 'white_wisteria']]
@@ -78,7 +73,6 @@ def get_place(id):
 
 
 def find_tree_in_place(id):
-
     configure_feature = get_place(id)
     if has_key(configure_feature, "feature"):
         return find_tree_in_config(configure_feature["feature"], id)
@@ -142,8 +136,11 @@ def find_tree_in_config(id, id2):
         for fes in fes112:
             js_fes = get_config(fes)
             if check_value(js_fes, "type", "minecraft:tree"):
-                # print()
-                tree = get_tree_by_leave(fes, js_fes["config"]["foliage_provider"]["state"]["Name"])
+                tree=None
+                if has_key(js_fes["config"]["foliage_provider"],"state"):
+                    tree = get_tree_by_leave(fes, js_fes["config"]["foliage_provider"]["state"]["Name"])
+                else:
+                    txt_info += f"{fes},{jt.dictToJsonNoOpen(js_fes)}\n"
                 if tree:
                     if type(tree) == str:
                         result.append(tree)
@@ -159,39 +156,77 @@ def find_tree_in_config(id, id2):
 
 out = []
 count = 0
-for i in os.listdir(p1):
-    # print(i)
-    biome = jt.readJsonFile(f"{p1}/{i}")
-    biome_id = "natures_spirit:" + i.split(".")[0]
-    ss = {
-        "select": {"name": biome_id},
-        "apply": {
-            "species": {
-                "random": {
-                }
-            },
-            "density": [1],
-            "chance": 1.0,
-            "forestness": 1.0
+if os.path.exists(p1):
+    for i in os.listdir(p1):
+        # print(i)
+        biome = jt.readJsonFile(f"{p1}/{i}")
+        biome_id = "natures_spirit:" + i.split(".")[0]
+        ss = {
+            "select": {"name": biome_id},
+            "apply": {
+                "species": {
+                    "random": {
+                    }
+                },
+                "density": [1],
+                "chance": 1.0,
+                "forestness": 1.0
+            }
         }
-    }
-    any = False
-    if biome.get("features") is not None:
-        features = []
-        for j in biome["features"]:
-            features.extend(j)
-        for fea in features:
-            res = find_tree_in_place(fea)
-            if len(res) > 0:
-                any = True
-                for r in res:
-                    ss["apply"]["species"]["random"][r] = 1
-    if any:
-        out.append(ss)
-    if len(txt_info) > count:
-        txt_info.insert(count, f"# {biome_id}\n")
-        txt_info.append("\n")
-    count = len(txt_info)
+        any = False
+        if biome.get("features") is not None:
+            features = []
+            for j in biome["features"]:
+                features.extend(j)
+            for fea in features:
+                res = find_tree_in_place(fea)
+                if len(res) > 0:
+                    any = True
+                    for r in res:
+                        ss["apply"]["species"]["random"][r] = 1
+        # if any:
+        if True:
+            out.append(ss)
+        if len(txt_info) > count:
+            txt_info.insert(count, f"# {biome_id}\n")
+            txt_info.append("\n")
+        count = len(txt_info)
+
+if os.path.exists(p_base):
+    for i in os.listdir(p_base):
+        # print(i)
+        biome = jt.readJsonFile(f"{p_base}/{i}")
+        if not check_value(biome,'type','forge:add_features'):
+            continue
+
+        biome_id = biome["biomes"]
+        ss = {
+            "select": {"name": biome_id},
+            "apply": {
+                "species": {
+                    "method": "splice_before",
+                    "random": {
+                        "...": 10
+                    }
+                }
+            }
+        }
+        any = False
+        if biome.get("features") is not None:
+            features = biome.get("features")
+            for fea in features:
+                res = find_tree_in_place(fea)
+                if len(res) > 0:
+                    any = True
+                    for r in res:
+                        ss["apply"]["species"]["random"][r] = 1
+        if any:
+            out.append(ss)
+        if len(txt_info) > count:
+            txt_info.insert(count, f"# {biome_id}\n")
+            txt_info.append("\n")
+        count = len(txt_info)
+
 with open("cache/warnings.log", "w") as f:
     f.write(''.join(txt_info))
 
