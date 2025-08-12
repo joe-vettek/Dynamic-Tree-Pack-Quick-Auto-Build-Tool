@@ -158,16 +158,10 @@ out
 .idea
 
 output
-v_FruitTreesInfo.py
-v_SomeOther.py
-v_SakuraInfo.py
 treeInfo.json
 
-v_OreTreeInfo.py
 Some.py
 
 temp
 soilInfo.json
-v_TLTreeInfo.py
-v_BBTreeInfo.py
 modInfo.json
